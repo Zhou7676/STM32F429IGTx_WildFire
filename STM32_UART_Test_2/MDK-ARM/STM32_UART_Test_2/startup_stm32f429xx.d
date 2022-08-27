@@ -1,0 +1,1 @@
+stm32_uart_test_2\startup_stm32f429xx.o: startup_stm32f429xx.s

@@ -89,6 +89,8 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	printf("STM32 UART Test1\n");
+	printf("自定义函数输出： 这是一个串口实验\n");
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
