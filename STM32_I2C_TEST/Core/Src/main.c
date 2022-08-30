@@ -107,6 +107,7 @@ int main(void)
 		HAL_GPIO_WritePin(GPIOH, LED_R_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOH, LED_G_Pin, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(GPIOH, LED_B_Pin, GPIO_PIN_SET);
+		
 	}
 	else
 	{
