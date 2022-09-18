@@ -36,8 +36,8 @@ extern SPI_HandleTypeDef hspi5;
 /* USER CODE BEGIN Private defines */
 #define  sFLASH_ID         								0XEF4019     //W25Q128
 
-#define SPI_FLASH_PAGESIZE								256
-#define SPI_FLASH_PER_WRITE_PAGESIZE			256
+#define SPI_FLASH_PageSize								256
+#define SPI_FLASH_PerWritePageSize			256
 
 #define W25X_WriteEnable		      				0x06 
 #define W25X_WriteDisable		     				 	0x04 
@@ -61,11 +61,11 @@ extern SPI_HandleTypeDef hspi5;
 #define WIP_Flag													0x01
 #define Dummy_Byte 												0xFF
 
-#define digitalHi(p,i)										{p->BSRR = i;}		//Set HIGH
-#define digitalLo(p, i)										{p->BSRR = i;}		//Set LOW
+#define	digitalHi(p,i)			    {p->BSRR=i;}			  //设置为高电平		
+#define digitalLo(p,i)			    {p->BSRR=(uint32_t)i << 16;}				//输出低电平
+#define SPI_FLASH_CS_LOW()      digitalLo(GPIOF, GPIO_PIN_6 )
+#define SPI_FLASH_CS_HIGH()     digitalHi(GPIOF, GPIO_PIN_6 )
 
-#define SPI_FLASH_CS_HIGH()								digitalHi(GPIOF, GPIO_PIN_6)
-#define SPI_FLASH_CS_LOW()								digitalLo(GPIOF, GPIO_PIN_6)
 	
 
 #define SPIT_FLAG_TIMEOUT         				((uint32_t)0x1000)
@@ -79,19 +79,26 @@ extern SPI_HandleTypeDef hspi5;
 void MX_SPI5_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-static uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode);
-uint8_t SPI_FLASH_SendByte(uint8_t byte);
-uint8_t SPI_FLASH_ReadByte(void);
-uint32_t SPI_FLASH_ReadID(void);
-void SPI_FLASH_WriteEnable(void);
-void SPI_FLASH_WaitForWriteEnd(void);
+void SPI_FLASH_Init(void);
 void SPI_FLASH_SectorErase(uint32_t SectorAddr);
-void SPI_FLASH_PageWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
-void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite);
-void SPI_FLASH_BufferRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead);
+void SPI_FLASH_BulkErase(void);
+void SPI_FLASH_PageWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
+void SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteToWrite);
+void SPI_FLASH_BufferRead(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteToRead);
+uint32_t SPI_FLASH_ReadID(void);
 uint32_t SPI_FLASH_ReadDeviceID(void);
+void SPI_FLASH_StartReadSequence(uint32_t ReadAddr);
+void SPI_Flash_PowerDown(void);
+void SPI_Flash_WAKEUP(void);
 void SPI_FLASH_Mode_Init(void);
 
+
+uint8_t SPI_FLASH_ReadByte(void);
+uint8_t SPI_FLASH_SendByte(uint8_t byte);
+uint16_t SPI_FLASH_SendHalfWord(uint16_t HalfWord);
+void SPI_FLASH_WriteEnable(void);
+void SPI_FLASH_WaitForWriteEnd(void);
+static uint16_t SPI_TIMEOUT_UserCallback(uint8_t errorCode);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
