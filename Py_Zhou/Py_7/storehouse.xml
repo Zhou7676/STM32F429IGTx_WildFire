@@ -1,0 +1,14 @@
+<storehouse>
+<goods category = "fish">
+<title>lake fish</title>
+<name>jiyu</name>
+<amount>18</amount>
+<price>8</price>
+</goods>
+<goods category = "fruit">
+<title>wendaishuiguo</title>
+<name>mihoutao</name>
+<amount>10</amount>
+<price>10</price>
+</goods>
+</storehouse>
